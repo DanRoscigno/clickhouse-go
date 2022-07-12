@@ -7,11 +7,13 @@ import (
 	"testing"
 )
 
-func sslVersion() (string, error) {
+func sslNoVerifyVersion() (string, error) {
 	var (
 		conn, err = clickhouse.Open(&clickhouse.Options{
 			Addr: []string{"play.clickhouse.com:9440"},
-			TLS:  &tls.Config{},
+			TLS: &tls.Config{
+				InsecureSkipVerify: true,
+			},
 			Auth: clickhouse.Auth{
 				Username: "explorer",
 			},
@@ -27,7 +29,7 @@ func sslVersion() (string, error) {
 	return v.String(), nil
 }
 
-func TestSSL(t *testing.T) {
-	_, err := sslVersion()
+func TestSSLNoVerify(t *testing.T) {
+	_, err := sslNoVerifyVersion()
 	require.NoError(t, err)
 }
