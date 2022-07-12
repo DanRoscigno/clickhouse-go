@@ -1,8 +1,9 @@
-package main
+package connect
 
 import (
 	"github.com/ClickHouse/clickhouse-go/v2"
-	"log"
+	"github.com/stretchr/testify/require"
+	"testing"
 )
 
 func version() (string, error) {
@@ -21,10 +22,7 @@ func version() (string, error) {
 	return v.String(), nil
 }
 
-func main() {
-	version, err := version()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(version)
+func TestConnect(t *testing.T) {
+	_, err := version()
+	require.NoError(t, err)
 }
